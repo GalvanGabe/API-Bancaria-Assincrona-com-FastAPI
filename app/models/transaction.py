@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, ForeignKey, Numeric, String, DateTime
 from sqlalchemy.orm import relationship
 from datetime import datetime, timezone
+
 from app.database.connection import Base
 
 class Transaction(Base):
@@ -15,4 +16,7 @@ class Transaction(Base):
 
     account_id = Column(Integer, ForeignKey("accounts.id"))
 
-    account = relationship("Account", backref="transactions")
+    account = relationship(
+        "Account",
+        back_populates="transactions"
+    )

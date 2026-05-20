@@ -4,6 +4,7 @@ from passlib.context import CryptContext
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 
 from app.database.dependencies import get_db
 from app.models.user import User
@@ -67,7 +68,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db = Depends(get
     except JWTError:
         raise credentials_exception
     
-    query = select(User).where(User.email == email)
+    query = select(User).options(selectinload(User.account)).where(User.email == email)
     result = await db.execute(query)
     user = result.scalar_one_or_none()
 

@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, ForeignKey, Numeric
 from sqlalchemy.orm import relationship
+
 from app.database.connection import Base
 
 class Account(Base):
@@ -10,4 +11,12 @@ class Account(Base):
 
     user_id = Column(Integer, ForeignKey("users.id"), unique=True)
 
-    user = relationship("User", backref="account")
+    user = relationship(
+        "User",
+        back_populates="account"
+    )
+
+    transactions = relationship(
+        "Transaction",
+        back_populates="account"
+    )
