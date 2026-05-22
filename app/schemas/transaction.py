@@ -17,12 +17,12 @@ class TransactionCreate(BaseModel):
     
 class TransactionResponse(BaseModel):
     id: int
-    amount: Decimal
     type: str
+    amount: Decimal
     created_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
 
-class TransferSchema(BaseModel):
+class TransferCreate(BaseModel):
     destination_cpf: str
     amount: Decimal
